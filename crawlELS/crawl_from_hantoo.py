@@ -18,7 +18,7 @@ from config import DB_CONFIG
 
 
 from crawlELS.download_pdf import download_pdf
-from crawlELS.read_pdf import read_pdf
+from crawlELS.read_pdf import read_pdf_from_hantoo
 from crawlELS.check_is_redempted import check_is_redempted
 
 
@@ -29,7 +29,7 @@ cursor = conn.cursor()
 
 # 데이터 삽입 쿼리
 insert_query = '''
-INSERT INTO ELS_hantoo (num_equity, x_equity, y_equity, z_equity, loss_rate, x_volatility, y_volatility, z_volatility, rho_xy, rho_xz, rho_yz, coupon_rate, expiration_coupon_rate, kib, payment_conditions_1, payment_conditions_2, payment_conditions_3, payment_conditions_4, payment_conditions_5, payment_conditions_6, initial_price_evaluation_date, early_repayment_evaluation_date_1, early_repayment_evaluation_date_2, early_repayment_evaluation_date_3, early_repayment_evaluation_date_4, early_repayment_evaluation_date_5, maturity_date, is_redempted, pdf_link)
+INSERT INTO ELS_hantoo_v2 (num_equity, x_equity, y_equity, z_equity, loss_rate, x_volatility, y_volatility, z_volatility, rho_xy, rho_xz, rho_yz, coupon_rate, expiration_coupon_rate, kib, payment_conditions_1, payment_conditions_2, payment_conditions_3, payment_conditions_4, payment_conditions_5, payment_conditions_6, initial_price_evaluation_date, early_repayment_evaluation_date_1, early_repayment_evaluation_date_2, early_repayment_evaluation_date_3, early_repayment_evaluation_date_4, early_repayment_evaluation_date_5, maturity_date, is_redempted, pdf_link)
 VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
 '''
 
@@ -57,7 +57,7 @@ from_date_element.send_keys("20160115")
 
 for _ in range(len(current_value)):
     to_date_element.send_keys(Keys.BACK_SPACE)
-to_date_element.send_keys("20180502")
+to_date_element.send_keys("20180426")
 
 # 120개로 옵션 바꾸기
 # JavaScript를 사용하여 값을 변경하고 change 이벤트를 발생시킵니다
@@ -361,7 +361,7 @@ while True:
         # pdf 다운 받고, 변동성 + 상관계수 받아오는 로직 추가하기
         download_pdf(pdf_link, product_number)
         time.sleep(2)
-        volatilities, correlations = read_pdf(product_number)
+        volatilities, correlations = read_pdf_from_hantoo(product_number)
         print(volatilities, correlations)
 
 

@@ -92,7 +92,7 @@ def eval_prod_with_one_prop(data):
     df = pd.DataFrame(S)
     early_redemption_times = [182, 364, 546, 728, 910, 1092]  # 각 조기 상환 시점
     early_redemption_levels = strike_price
-    early_redempted_probabilities = []
+    early_redemption_probabilities = []
     is_early_redempted = [False] * n
 
     # 1~5차 조기상환 확률 계산
@@ -104,7 +104,7 @@ def eval_prod_with_one_prop(data):
             if df[j][early_redemption_times[i]] > early_redemption_levels[i]:
                 temp += 1
                 is_early_redempted[j] = True
-        early_redempted_probabilities.append(temp / n * 100)
+        early_redemption_probabilities.append(temp / n * 100)
 
     # 만기 수익 볼 확률 계산
     temp = 0
@@ -118,27 +118,27 @@ def eval_prod_with_one_prop(data):
 
     final_gain_prob = temp / n * 100
 
-    loss_prob = 100 - sum(early_redempted_probabilities) - final_gain_prob
+    loss_prob = 100 - sum(early_redemption_probabilities) - final_gain_prob
 
     # for i in range(5):
-    #     print(str(i + 1) + "차 조기상환 확률 : " + str(early_redempted_probabilities[i]) + "%")
+    #     print(str(i + 1) + "차 조기상환 확률 : " + str(early_redemption_probabilities[i]) + "%")
     #
     # print("만기 수익 볼 확률 : " + str(final_gain_prob) + "%")
     # print("원금 손실 확률 : " + str(loss_prob) + "%")
 
-    early_redempted_probabilities = [round(elem, 4) for elem in early_redempted_probabilities]
+    early_redemption_probabilities = [round(elem, 4) for elem in early_redemption_probabilities]
     final_gain_prob = round(final_gain_prob, 4)
     loss_prob = round(loss_prob, 4)
     # print(price)
 
-    return price, early_redempted_probabilities, final_gain_prob, loss_prob
+    return price, early_redemption_probabilities, final_gain_prob, loss_prob
 
 
 # 여러 경로 중 낙인 찍고 올라온 것들 있는지 확인
 def eval_prod_with_two_prop(data):
     start = time.time()
 
-    n = 1000
+    n = 10000
     r = data["interest_rate"]
     x_vol = data["x_volatility"]
     y_vol = data["y_volatility"]
@@ -237,7 +237,7 @@ def eval_prod_with_two_prop(data):
     df = pd.DataFrame(S)
     early_redemption_times = [182, 364, 546, 728, 910, 1091]  # 각 조기 상환 시점
     early_redemption_levels = strike_price
-    early_redempted_probabilities = []
+    early_redemption_probabilities = []
     is_early_redempted = [False] * n
 
     # 1~5차 조기상환 확률 계산
@@ -249,7 +249,7 @@ def eval_prod_with_two_prop(data):
             if df[j][early_redemption_times[i]] > early_redemption_levels[i]:
                 temp += 1
                 is_early_redempted[j] = True
-        early_redempted_probabilities.append(temp / n * 100)
+        early_redemption_probabilities.append(temp / n * 100)
 
     # 만기 수익 볼 확률 계산
     temp = 0
@@ -260,27 +260,27 @@ def eval_prod_with_two_prop(data):
             temp += 1
 
     final_gain_prob = temp / n * 100
-    loss_prob = 100 - sum(early_redempted_probabilities) - final_gain_prob
+    loss_prob = 100 - sum(early_redemption_probabilities) - final_gain_prob
 
     # print(price)
     # for i in range(5):
-    #     print(str(i + 1) + "차 조기상환 확률 : " + str(early_redempted_probabilities[i]) + "%")
+    #     print(str(i + 1) + "차 조기상환 확률 : " + str(early_redemption_probabilities[i]) + "%")
     #
     # print("만기 수익 볼 확률 : " + str(final_gain_prob) + "%")
     # print("원금 손실 확률 : " + str(loss_prob) + "%")
 
-    early_redempted_probabilities = [round(elem, 4) for elem in early_redempted_probabilities]
+    early_redemption_probabilities = [round(elem, 4) for elem in early_redemption_probabilities]
     final_gain_prob = round(final_gain_prob, 4)
     loss_prob = round(loss_prob, 4)
     # print(loss_prob)
 
-    return price, early_redempted_probabilities, final_gain_prob, loss_prob
+    return price, early_redemption_probabilities, final_gain_prob, loss_prob
 
 
 def eval_prod_with_three_prop(data):
     start = time.time()
 
-    n = 1000
+    n = 10000
     r = data["interest_rate"]
     x_vol = data["x_volatility"]
     y_vol = data["y_volatility"]
@@ -388,7 +388,7 @@ def eval_prod_with_three_prop(data):
 
     early_redemption_times = [182, 364, 546, 728, 910, 1091]  # 각 조기 상환 시점
     early_redemption_levels = strike_price
-    early_redempted_probabilities = []
+    early_redemption_probabilities = []
     is_early_redempted = [False] * n
 
     # 1~5차 조기상환 확률 계산
@@ -400,7 +400,7 @@ def eval_prod_with_three_prop(data):
             if df[j][early_redemption_times[i]] > early_redemption_levels[i]:
                 temp += 1
                 is_early_redempted[j] = True
-        early_redempted_probabilities.append(temp / n * 100)
+        early_redemption_probabilities.append(temp / n * 100)
 
     # 만기 수익 볼 확률 계산
     temp = 0
@@ -412,17 +412,17 @@ def eval_prod_with_three_prop(data):
 
     final_gain_prob = temp / n * 100
 
-    loss_prob = 100 - sum(early_redempted_probabilities) - final_gain_prob
+    loss_prob = 100 - sum(early_redemption_probabilities) - final_gain_prob
 
     # print(price)
     # for i in range(5):
-    #     print(str(i + 1) + "차 조기상환 확률 : " + str(early_redempted_probabilities[i]) + "%")
+    #     print(str(i + 1) + "차 조기상환 확률 : " + str(early_redemption_probabilities[i]) + "%")
     #
     # print("만기 수익 볼 확률 : " + str(final_gain_prob) + "%")
     # print("원금 손실 확률 : " + str(loss_prob) + "%")
 
-    early_redempted_probabilities = [round(elem, 4) for elem in early_redempted_probabilities]
+    early_redemption_probabilities = [round(elem, 4) for elem in early_redemption_probabilities]
     final_gain_prob = round(final_gain_prob, 4)
     loss_prob = round(loss_prob, 4)
 
-    return price, early_redempted_probabilities, final_gain_prob, loss_prob
+    return price, early_redemption_probabilities, final_gain_prob, loss_prob
